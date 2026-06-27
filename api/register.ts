@@ -4,9 +4,14 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // Only allow POST requests
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Méthode non autorisée" });
+  // Debug: Log the method
+  console.log("Method received:", req.method);
+  
+  if (req.method === "GET") {
+    return res.status(200).json({ 
+      message: "Le serveur a reçu un GET au lieu d'un POST. Vérifiez les redirections.",
+      receivedMethod: req.method 
+    });
   }
 
   const { firstName, lastName, email, whatsApp } = req.body;
