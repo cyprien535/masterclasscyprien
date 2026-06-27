@@ -76,6 +76,7 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
     setIsPending(true);
 
     try {
+      // Forcing relative path to ensure it hits the current host's API (Vercel)
       const response = await fetch("/api/register", {
         method: "POST",
         headers: {
@@ -166,13 +167,13 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
             <div className="absolute -top-16 left-1/2 -translate-x-1/2 flex flex-col items-center z-20 pointer-events-none select-none">
               <motion.div
                 animate={{ 
-                  y: [-6, 6, -6],
-                  scale: [0.95, 1.05, 0.95]
+                y: [-6, 6, -6],
+                scale: [0.95, 1.05, 0.95]
                 }}
                 transition={{ 
-                  repeat: Infinity, 
-                  duration: 1.5, 
-                  ease: "easeInOut" 
+                repeat: Infinity, 
+                duration: 1.5, 
+                ease: "easeInOut" 
                 }}
                 className="flex flex-col items-center"
               >
@@ -186,14 +187,14 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
             <div className="hidden xl:block absolute -left-28 top-1/3 -translate-y-1/2 text-red-500 z-20 pointer-events-none select-none">
               <motion.div
                 animate={{ 
-                  x: [0, 8, 0],
-                  y: [0, -4, 0],
-                  rotate: [-12, -8, -12]
+                x: [0, 8, 0],
+                y: [0, -4, 0],
+                rotate: [-12, -8, -12]
                 }}
                 transition={{ 
-                  repeat: Infinity, 
-                  duration: 2, 
-                  ease: "easeInOut" 
+                repeat: Infinity, 
+                duration: 2, 
+                ease: "easeInOut" 
                 }}
                 className="flex flex-col items-center gap-1"
               >
@@ -210,15 +211,15 @@ export default function RegistrationForm({ onSuccess }: RegistrationFormProps) {
             <div className="hidden xl:block absolute -right-24 top-2/3 -translate-y-1/2 text-blue-500 z-20 pointer-events-none select-none">
               <motion.div
                 animate={{ 
-                  x: [0, -8, 0],
-                  y: [0, 4, 0],
-                  rotate: [15, 10, 15]
+                x: [0, -8, 0],
+                y: [0, 4, 0],
+                rotate: [15, 10, 15]
                 }}
                 transition={{ 
-                  repeat: Infinity, 
-                  duration: 2.2, 
-                  ease: "easeInOut",
-                  delay: 0.5
+                repeat: Infinity, 
+                duration: 2.2, 
+                ease: "easeInOut",
+                delay: 0.5
                 }}
                 className="flex flex-col items-center gap-1"
               >
