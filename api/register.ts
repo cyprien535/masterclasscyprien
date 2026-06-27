@@ -1,41 +1,26 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
+// Prevent multiple instances of Prisma Client in development
+const globalForPrisma = global as unknown as { prisma: PrismaClient };
+const prisma = globalForPrisma.prisma || new PrismaClient();
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // Debug: Log the method
-  console.log("Method received:", req.method);
-  
-  if (req.method === "GET") {
-    return res.status(200).json({ 
-      message: "Le serveur a reçu un GET au lieu d'un POST. Vérifiez les redirections.",
-      receivedMethod: req.method 
-    });
+  // Debug: Log method
+  console.log("Method:", req.method);
+
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Méthode non autorisée" });
   }
 
   const { firstName, lastName, email, whatsApp } = req.body;
 
-  // Debug: Check environment variable presence
-  if (!process.env.DATABASE_URL) {
-    return res.status(500).json({ 
-      error: "Configuration manquante", 
-      details: "La variable DATABASE_URL n'est pas définie sur Vercel." 
-    });
-  }
-
-  // Validate required fields
   if (!firstName || !lastName || !email || !whatsApp) {
-    return res.status(400).json({ 
-      error: "Tous les champs sont requis.",
-      received: { firstName, lastName, email, whatsApp }
-    });
+    return res.status(400).json({ error: "Tous les champs sont requis." });
   }
 
   try {
-    // Check connection to DB
-    await prisma.$connect();
-    
     // Check if already registered
     const exists = await prisma.registration.findUnique({
       where: { email: email.trim().toLowerCase() },
@@ -57,15 +42,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     return res.status(201).json(newReg);
   } catch (error: any) {
-    console.error("CRITICAL ERROR:", error);
-    
-    return res.status(500).json({
-      error: "Erreur interne du serveur",
-      message: error.message,
-      code: error.code,
-      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    console.error("Prisma Error:", error);
+    return res.status(500).json({ 
+      error: "Erreur lors de l'enregistrement", 
+      details: error.message,
+      code: error.code 
     });
-  } finally {
-    await prisma.$disconnect();
   }
 }
