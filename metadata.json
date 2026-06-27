@@ -1,0 +1,6 @@
+{
+  "name": "Masterclass MEVI Cyprien",
+  "description": "Landing page de la masterclass gratuite pour créer des sites web professionnels qui attirent des clients par MEVI Cyprien, Développeur AI Full Stack.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
