@@ -14,18 +14,19 @@ import TestimonialsSection from "./components/TestimonialsSection";
 import ProjectsSection from "./components/ProjectsSection";
 import ProgrammeSection from "./components/ProgrammeSection";
 import FAQSection from "./components/FAQSection";
-import RegistrationForm from "./components/RegistrationForm";
+import LiveSection from "./components/LiveSection";
+
 import Footer from "./components/Footer";
 import LegalModals from "./components/LegalModals";
 import ThankYouPage from "./components/ThankYouPage";
 import AdminPanel from "./components/AdminPanel";
-import { Registration } from "./types";
+
 
 export default function App() {
   const [toast, setToast] = useState<{ show: boolean; title: string; desc: string } | null>(null);
   const [activeLegalModal, setActiveLegalModal] = useState<"mentions" | "privacy" | null>(null);
   const [showFloatingCta, setShowFloatingCta] = useState(false);
-  const [registeredUser, setRegisteredUser] = useState<Registration | null>(null);
+
   const [showAdmin, setShowAdmin] = useState(false);
 
   useEffect(() => {
@@ -48,36 +49,24 @@ export default function App() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleScrollToRegister = () => {
-    const target = document.querySelector("#inscrire");
+  const handleScrollToLive = () => {
+    const target = document.querySelector("#live");
     if (target) {
       target.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
-  const handleRegistrationSuccess = (reg: Registration) => {
-    setRegisteredUser(reg);
-    window.scrollTo({ top: 0, behavior: "instant" });
-  };
 
-  if (registeredUser) {
-    return (
-      <ThankYouPage
-        registration={registeredUser}
-        onBackToHome={() => setRegisteredUser(null)}
-      />
-    );
-  }
 
   return (
     <div className="min-h-screen bg-slate-950 font-sans text-slate-100 antialiased selection:bg-red-600 selection:text-white overflow-x-hidden">
       {/* Header */}
-      <Header onRegisterClick={handleScrollToRegister} />
+      <Header onRegisterClick={handleScrollToLive} />
 
       {/* Main Sections */}
       <main>
         {/* Hero Section */}
-        <Hero onRegisterClick={handleScrollToRegister} />
+        <Hero onRegisterClick={handleScrollToLive} />
 
         {/* What You Will Learn */}
         <LearnSection />
@@ -97,8 +86,10 @@ export default function App() {
         {/* FAQ Accordion */}
         <FAQSection />
 
-        {/* Registration form */}
-        <RegistrationForm onSuccess={handleRegistrationSuccess} />
+        {/* Live YouTube Section */}
+        <LiveSection />
+
+
       </main>
 
       {/* Footer */}
@@ -123,10 +114,10 @@ export default function App() {
             id="mobile-sticky-cta"
           >
             <button
-              onClick={handleScrollToRegister}
+              onClick={handleScrollToLive}
               className="w-full flex items-center justify-center gap-3 bg-red-600 active:scale-[0.98] text-white font-extrabold py-4 px-6 rounded-2xl text-sm tracking-wide shadow-2xl shadow-red-950/80 border border-red-500/20 transition-all duration-150"
             >
-              Je réserve ma place gratuite
+              Accéder au Live YouTube
               <ArrowRight className="w-4 h-4 animate-pulse" />
             </button>
           </motion.div>

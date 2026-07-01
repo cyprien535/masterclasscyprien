@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { CheckCircle2, ArrowLeft, Mail, Calendar, Video, MessageCircle, Sparkles } from "lucide-react";
+import { Youtube, Mail, ArrowLeft, ExternalLink, Sparkles, Bell } from "lucide-react";
 import { Registration } from "../types";
 
 interface ThankYouPageProps {
@@ -8,152 +8,100 @@ interface ThankYouPageProps {
 }
 
 export default function ThankYouPage({ registration, onBackToHome }: ThankYouPageProps) {
+  const handleScrollToLive = () => {
+    onBackToHome();
+    setTimeout(() => {
+      const target = document.querySelector("#live");
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 100);
+  };
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between relative overflow-hidden font-sans">
-      {/* Background Glows */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-red-600/10 rounded-full blur-3xl -z-10" />
-      <div className="absolute bottom-0 right-10 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl -z-10" />
+    <div className="min-h-screen bg-slate-950 text-white flex flex-col items-center justify-center px-4 py-12 relative overflow-hidden">
+      {/* Background patterns */}
+      <div className="absolute top-1/4 left-1/10 w-96 h-96 bg-red-600/10 rounded-full blur-3xl -z-10" />
+      <div className="absolute bottom-1/4 right-1/10 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl -z-10" />
 
-      {/* Header-like spacer */}
-      <header className="max-w-6xl mx-auto w-full px-6 py-6 flex justify-between items-center z-10">
-        <div className="flex items-center gap-2">
-          <span className="text-xl font-black tracking-wider text-white">
-            MEVI<span className="text-red-600">.</span>CYPRIEN
-          </span>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="max-w-2xl w-full bg-slate-900/50 backdrop-blur-xl border border-slate-800 p-8 sm:p-12 rounded-[2.5rem] shadow-2xl text-center space-y-8"
+      >
+        <div className="flex justify-center">
+          <div className="relative">
+            <div className="absolute inset-0 bg-red-600 blur-2xl opacity-20 animate-pulse" />
+            <div className="relative p-6 bg-red-600 text-white rounded-3xl shadow-xl shadow-red-900/40">
+              <Sparkles className="w-12 h-12" />
+            </div>
+          </div>
         </div>
-        <button
-          onClick={onBackToHome}
-          className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-400 hover:text-white transition-colors py-2 px-4 rounded-xl bg-slate-900 border border-slate-800"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Retour au site
-        </button>
-      </header>
 
-      {/* Main Content */}
-      <main className="max-w-3xl mx-auto px-6 py-12 flex-grow flex flex-col justify-center items-center text-center z-10">
-        <motion.div
-          initial={{ scale: 0.5, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: "spring", stiffness: 260, damping: 20 }}
-          className="w-20 h-20 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-full flex items-center justify-center mb-8 shadow-2xl shadow-emerald-500/10"
-        >
-          <CheckCircle2 className="w-12 h-12" />
-        </motion.div>
+        <div className="space-y-4">
+          <h1 className="text-3xl sm:text-4xl font-black font-display tracking-tight text-white">
+            Merci, <span className="text-red-500">{registration.firstName}</span> !
+          </h1>
+          <p className="text-slate-400 text-lg leading-relaxed">
+            Votre intérêt a bien été pris en compte. Vous faites maintenant partie de notre liste privilégiée pour recevoir les prochaines ressources et alertes.
+          </p>
+        </div>
 
-        <motion.h1
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.1 }}
-          className="text-4xl sm:text-5xl font-black font-display tracking-tight text-white mb-4"
-        >
-          Félicitations, <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-400">{registration.firstName}</span> !
-        </motion.h1>
-
-        <motion.p
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="text-slate-300 text-lg sm:text-xl max-w-xl mb-12 leading-relaxed"
-        >
-          Votre place a été réservée avec succès pour cette Masterclass exclusive sur la création d'applications d'IA.
-        </motion.p>
-
-        {/* Steps Card */}
-        <motion.div
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="w-full bg-slate-900/60 border border-slate-800/80 backdrop-blur-md rounded-3xl p-6 sm:p-8 text-left mb-10 shadow-2xl"
-        >
-          <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-red-500" />
-            Que devez-vous faire maintenant ?
-          </h3>
-
-          <div className="space-y-6">
-            {/* Step 1 */}
-            <div className="flex gap-4">
-              <div className="w-8 h-8 rounded-full bg-red-600/10 border border-red-500/30 text-red-400 flex items-center justify-center font-bold text-sm shrink-0">
-                1
-              </div>
-              <div>
-                <h4 className="font-bold text-white text-base">Contactez MEVI Cyprien sur WhatsApp</h4>
-                <p className="text-slate-400 text-sm mt-1 leading-relaxed">
-                  Pour recevoir le lien de connexion en direct et poser vos questions, contactez-moi directement au <span className="text-emerald-400 font-semibold">+229 44 52 20 51</span>.
-                </p>
-                <a
-                  href="https://wa.me/22944522051" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider py-3 px-5 rounded-xl mt-3 shadow-lg shadow-emerald-600/15 transition-all"
-                >
-                  <MessageCircle className="w-4 h-4 fill-current" />
-                  Me contacter sur WhatsApp
-                </a>
-              </div>
+        <div className="grid grid-cols-1 gap-4 pt-4">
+          <div className="bg-slate-950/50 border border-slate-800 p-6 rounded-2xl text-left space-y-3">
+            <div className="flex items-center gap-3 text-red-500 font-bold uppercase tracking-widest text-xs">
+              <Youtube className="w-5 h-5" />
+              Prochaine étape
             </div>
+            <h3 className="text-xl font-bold text-white">Rejoignez-nous sur YouTube</h3>
+            <p className="text-slate-400 text-sm">
+              La masterclass sera diffusée en direct. Assurez-vous d'activer la cloche de notification pour ne rien manquer.
+            </p>
+            <a
+              href="https://youtube.com/live/SeK2oj21pME?feature=share"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-red-500 font-bold text-sm hover:underline pt-2"
+            >
+              Voir le lien du direct
+              <ExternalLink className="w-4 h-4" />
+            </a>
+          </div>
 
-            {/* Divider */}
-            <div className="border-t border-slate-800/50 my-2" />
-
-            {/* Step 2 */}
-            <div className="flex gap-4">
-              <div className="w-8 h-8 rounded-full bg-blue-600/10 border border-blue-500/30 text-blue-400 flex items-center justify-center font-bold text-sm shrink-0">
-                2
-              </div>
-              <div>
-                <h4 className="font-bold text-white text-base">Vérifiez votre boîte mail ({registration.email})</h4>
-                <p className="text-slate-400 text-sm mt-1 leading-relaxed text-balance">
-                  Un email de confirmation contenant votre badge d'accès virtuel et le calendrier de l'événement vous a été envoyé. Pensez à vérifier vos dossiers <span className="text-slate-200">Spams</span> ou <span className="text-slate-200">Promotions</span>.
-                </p>
-              </div>
+          <div className="bg-slate-950/50 border border-slate-800 p-6 rounded-2xl text-left space-y-3">
+            <div className="flex items-center gap-3 text-blue-400 font-bold uppercase tracking-widest text-xs">
+              <Mail className="w-5 h-5" />
+              Confirmation
             </div>
-
-            {/* Divider */}
-            <div className="border-t border-slate-800/50 my-2" />
-
-            {/* Step 3 */}
-            <div className="flex gap-4">
-              <div className="w-8 h-8 rounded-full bg-purple-600/10 border border-purple-500/30 text-purple-400 flex items-center justify-center font-bold text-sm shrink-0">
-                3
-              </div>
-              <div>
-                <h4 className="font-bold text-white text-base">Ajoutez l'événement à votre agenda</h4>
-                <p className="text-slate-400 text-sm mt-1 leading-relaxed">
-                  Bloquez dès maintenant la date dans votre agenda pour être certain(e) de ne rien rater de cette session intensive de formation pratique.
-                </p>
-              </div>
-            </div>
+            <h3 className="text-xl font-bold text-white">Vérifiez votre boîte mail</h3>
+            <p className="text-slate-400 text-sm">
+              Un message de bienvenue vous a été envoyé à <strong>{registration.email}</strong>. Pensez à vérifier vos spams si vous ne le voyez pas.
+            </p>
           </div>
-        </motion.div>
+        </div>
 
-        {/* Info badges */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="flex flex-wrap justify-center gap-3 mb-4"
-        >
-          <div className="flex items-center gap-2 bg-slate-900 border border-slate-800 py-2 px-4 rounded-full text-xs text-slate-300">
-            <Calendar className="w-4 h-4 text-red-500" />
-            Accès Illimité
-          </div>
-          <div className="flex items-center gap-2 bg-slate-900 border border-slate-800 py-2 px-4 rounded-full text-xs text-slate-300">
-            <Video className="w-4 h-4 text-red-500" />
-            En direct & Replay
-          </div>
-          <div className="flex items-center gap-2 bg-slate-900 border border-slate-800 py-2 px-4 rounded-full text-xs text-slate-300">
-            <Mail className="w-4 h-4 text-red-500" />
-            Support d'accès envoyé
-          </div>
-        </motion.div>
-      </main>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+          <button
+            onClick={handleScrollToLive}
+            className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-black px-8 py-4 rounded-2xl transition-all shadow-xl shadow-red-900/30 hover:-translate-y-1 flex items-center justify-center gap-2"
+          >
+            <Youtube className="w-5 h-5" />
+            Aller au Live
+          </button>
+          <button
+            onClick={onBackToHome}
+            className="w-full sm:w-auto bg-slate-800 hover:bg-slate-700 text-white font-bold px-8 py-4 rounded-2xl transition-all flex items-center justify-center gap-2"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            Retour au site
+          </button>
+        </div>
+      </motion.div>
 
-      {/* Footer copyright */}
-      <footer className="py-6 border-t border-slate-900 text-center text-slate-600 text-xs z-10">
-        © 2026 MEVI Cyprien. Tous droits réservés.
-      </footer>
+      <div className="mt-12 text-slate-600 text-xs font-medium uppercase tracking-widest flex items-center gap-2">
+        <Bell className="w-4 h-4" />
+        Préparez-vous pour une session explosive
+      </div>
     </div>
   );
 }

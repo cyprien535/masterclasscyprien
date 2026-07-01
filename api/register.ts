@@ -31,10 +31,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const { firstName, lastName, email, whatsApp } = req.body;
 
-  if (!firstName || !lastName || !email || !whatsApp) {
+  // Only firstName and email are strictly required now
+  if (!firstName || !email) {
     return res.status(400).json({ 
-      error: "Tous les champs sont requis.",
-      received: { firstName, lastName, email, whatsApp }
+      error: "Le prénom et l'email sont requis.",
+      received: { firstName, email }
     });
   }
 
@@ -55,9 +56,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const newReg = await prisma.registration.create({
       data: {
         firstName: firstName.trim(),
-        lastName: lastName.trim(),
+        lastName: lastName ? lastName.trim() : "Contact",
         email: email.trim().toLowerCase(),
-        whatsApp: whatsApp.trim(),
+        whatsApp: whatsApp ? whatsApp.trim() : "N/A",
       },
     });
 

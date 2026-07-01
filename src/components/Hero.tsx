@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
-import { Calendar, Clock, Video, Gift, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Calendar, Clock, Youtube, Gift, ArrowRight } from "lucide-react";
 import heroImage from "../assets/images/hero.png";
 
 interface HeroProps {
@@ -10,27 +10,9 @@ interface HeroProps {
 export default function Hero({ onRegisterClick }: HeroProps) {
   const imageSrc = heroImage;
 
-  // Dynamic calculation for next Thursday at 13h (Benin Time - GMT+1 -> 12:00:00 UTC)
+  // Fixed date: Thursday, July 9, 2026 at 12:00:00 UTC (13:00 Benin time)
   const getTargetDate = () => {
-    const now = new Date();
-    // Candidate date pointing to Thursday of this week at 12:00:00 UTC
-    const target = new Date(Date.UTC(
-      now.getUTCFullYear(),
-      now.getUTCMonth(),
-      now.getUTCDate(),
-      12, 0, 0, 0
-    ));
-    
-    const currentUTCDay = now.getUTCDay(); // 0 is Sunday, 4 is Thursday
-    let daysToAdd = (4 - currentUTCDay + 7) % 7;
-    
-    // If it's Thursday today and we are already past 12:00 UTC (13:00 Benin time), we look at next Thursday
-    if (daysToAdd === 0 && now.getTime() >= target.getTime()) {
-      daysToAdd = 7;
-    }
-    
-    target.setUTCDate(target.getUTCDate() + daysToAdd);
-    return target;
+    return new Date(Date.UTC(2026, 6, 9, 12, 0, 0, 0)); // Note: Month is 0-indexed, so 6 is July
   };
 
   const getNextThursdayString = () => {
@@ -83,6 +65,13 @@ export default function Hero({ onRegisterClick }: HeroProps) {
     return () => clearInterval(timer);
   }, []);
 
+  const handleScrollToLive = () => {
+    const target = document.querySelector("#live");
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   return (
     <section
       id="accueil"
@@ -93,26 +82,17 @@ export default function Hero({ onRegisterClick }: HeroProps) {
       <div className="absolute bottom-1/4 right-1/10 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl -z-10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 md:gap-12 items-center">
           {/* Left Column (Content) */}
-          <div className="lg:col-span-7 flex flex-col items-start space-y-6">
-            {/* Masterclass Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-600 text-white text-xs font-bold uppercase tracking-wider shadow-md shadow-red-900/30"
-              id="hero-masterclass-badge"
-            >
-              100% En Ligne & Gratuit
-            </motion.div>
+          <div className="lg:col-span-7 md:col-span-1 flex flex-col items-start space-y-6">
+
 
             {/* Main Title */}
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-3xl sm:text-5xl lg:text-5xl font-extrabold font-display text-white tracking-tight leading-tight text-left"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-extrabold font-display text-white tracking-tight leading-tight text-left"
               id="hero-title"
             >
               🚀 Masterclass Gratuite : <br />
@@ -130,7 +110,7 @@ export default function Hero({ onRegisterClick }: HeroProps) {
               className="text-slate-300 text-base sm:text-lg max-w-xl text-left font-normal leading-relaxed"
               id="hero-description"
             >
-              Découvrez comment créer un site web professionnel qui inspire confiance, attire des prospects et génère des clients.
+              Découvrez comment créer un site web professionnel qui inspire confiance, attire des prospects et génère des clients. Accès libre sur YouTube.
             </motion.p>
 
             {/* Countdown Component */}
@@ -138,7 +118,7 @@ export default function Hero({ onRegisterClick }: HeroProps) {
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.35 }}
-              className="w-full sm:max-w-xl bg-slate-950/40 backdrop-blur-md border border-red-500/10 rounded-2xl p-5 flex flex-col items-center sm:items-start space-y-4 shadow-xl"
+              className="w-full sm:max-w-xl bg-slate-950/40 backdrop-blur-md border border-red-500/10 rounded-2xl p-4 sm:p-5 flex flex-col items-center sm:items-start space-y-3 sm:space-y-4 shadow-xl"
               id="hero-countdown"
             >
               <div className="flex items-center gap-2 text-red-500 text-xs font-bold uppercase tracking-wider">
@@ -149,43 +129,43 @@ export default function Hero({ onRegisterClick }: HeroProps) {
                 <span>La Masterclass commence dans :</span>
               </div>
               
-              <div className="flex items-center gap-2 sm:gap-4">
+              <div className="flex items-center gap-2 sm:gap-3 md:gap-4 flex-wrap justify-center sm:justify-start">
                 {/* Days */}
                 <div className="flex flex-col items-center">
-                  <div className="bg-slate-900 border border-slate-800/80 rounded-xl w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center text-xl sm:text-2xl font-extrabold font-mono text-white shadow-lg shadow-black/50">
+                  <div className="bg-slate-900 border border-slate-800/80 rounded-xl w-12 h-12 sm:w-14 md:w-16 flex items-center justify-center text-lg sm:text-xl md:text-2xl font-extrabold font-mono text-white shadow-lg shadow-black/50">
                     {timeLeft.days.toString().padStart(2, "0")}
                   </div>
-                  <span className="text-[10px] text-slate-400 mt-1.5 uppercase tracking-widest font-semibold font-display">Jours</span>
+                  <span className="text-[9px] sm:text-[10px] text-slate-400 mt-1.5 uppercase tracking-widest font-semibold font-display">Jours</span>
                 </div>
 
-                <span className="text-xl sm:text-2xl font-bold text-slate-700 font-mono self-start mt-3">:</span>
+                <span className="text-lg sm:text-xl md:text-2xl font-bold text-slate-700 font-mono self-start mt-2 sm:mt-3">:</span>
 
                 {/* Hours */}
                 <div className="flex flex-col items-center">
-                  <div className="bg-slate-900 border border-slate-800/80 rounded-xl w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center text-xl sm:text-2xl font-extrabold font-mono text-white shadow-lg shadow-black/50">
+                  <div className="bg-slate-900 border border-slate-800/80 rounded-xl w-12 h-12 sm:w-14 md:w-16 flex items-center justify-center text-lg sm:text-xl md:text-2xl font-extrabold font-mono text-white shadow-lg shadow-black/50">
                     {timeLeft.hours.toString().padStart(2, "0")}
                   </div>
-                  <span className="text-[10px] text-slate-400 mt-1.5 uppercase tracking-widest font-semibold font-display">Heures</span>
+                  <span className="text-[9px] sm:text-[10px] text-slate-400 mt-1.5 uppercase tracking-widest font-semibold font-display">Heures</span>
                 </div>
 
-                <span className="text-xl sm:text-2xl font-bold text-slate-700 font-mono self-start mt-3">:</span>
+                <span className="text-lg sm:text-xl md:text-2xl font-bold text-slate-700 font-mono self-start mt-2 sm:mt-3">:</span>
 
                 {/* Minutes */}
                 <div className="flex flex-col items-center">
-                  <div className="bg-slate-900 border border-slate-800/80 rounded-xl w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center text-xl sm:text-2xl font-extrabold font-mono text-white shadow-lg shadow-black/50">
+                  <div className="bg-slate-900 border border-slate-800/80 rounded-xl w-12 h-12 sm:w-14 md:w-16 flex items-center justify-center text-lg sm:text-xl md:text-2xl font-extrabold font-mono text-white shadow-lg shadow-black/50">
                     {timeLeft.minutes.toString().padStart(2, "0")}
                   </div>
-                  <span className="text-[10px] text-slate-400 mt-1.5 uppercase tracking-widest font-semibold font-display">Minutes</span>
+                  <span className="text-[9px] sm:text-[10px] text-slate-400 mt-1.5 uppercase tracking-widest font-semibold font-display">Minutes</span>
                 </div>
 
-                <span className="text-xl sm:text-2xl font-bold text-slate-700 font-mono self-start mt-3">:</span>
+                <span className="text-lg sm:text-xl md:text-2xl font-bold text-slate-700 font-mono self-start mt-2 sm:mt-3">:</span>
 
                 {/* Seconds */}
                 <div className="flex flex-col items-center">
-                  <div className="bg-slate-900/80 border border-red-500/20 rounded-xl w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center text-xl sm:text-2xl font-extrabold font-mono text-red-500 shadow-lg shadow-black/50">
+                  <div className="bg-slate-900/80 border border-red-500/20 rounded-xl w-12 h-12 sm:w-14 md:w-16 flex items-center justify-center text-lg sm:text-xl md:text-2xl font-extrabold font-mono text-red-500 shadow-lg shadow-black/50">
                     {timeLeft.seconds.toString().padStart(2, "0")}
                   </div>
-                  <span className="text-[10px] text-red-400 mt-1.5 uppercase tracking-widest font-semibold font-display">Secondes</span>
+                  <span className="text-[9px] sm:text-[10px] text-red-400 mt-1.5 uppercase tracking-widest font-semibold font-display">Secondes</span>
                 </div>
               </div>
             </motion.div>
@@ -195,7 +175,7 @@ export default function Hero({ onRegisterClick }: HeroProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="grid grid-cols-2 gap-4 w-full sm:max-w-xl text-left pt-2"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full sm:max-w-xl text-left pt-2"
               id="hero-details-grid"
             >
               <motion.div 
@@ -225,15 +205,16 @@ export default function Hero({ onRegisterClick }: HeroProps) {
               </motion.div>
 
               <motion.div 
+                onClick={handleScrollToLive}
                 whileHover={{ scale: 1.03, translateY: -2 }}
-                className="flex items-start space-x-3 bg-slate-900/50 backdrop-blur-sm border border-slate-800/80 p-3 rounded-xl hover:border-slate-700/80 transition-all cursor-default"
+                className="flex items-start space-x-3 bg-slate-900/50 backdrop-blur-sm border border-slate-800/80 p-3 rounded-xl hover:border-red-500/30 transition-all cursor-pointer"
               >
-                <div className="p-2 bg-blue-600/10 text-blue-500 rounded-lg shrink-0">
-                  <Video className="w-5 h-5" />
+                <div className="p-2 bg-red-600/10 text-red-500 rounded-lg shrink-0">
+                  <Youtube className="w-5 h-5" />
                 </div>
                 <div>
                   <h4 className="text-slate-400 text-xs font-medium">En ligne</h4>
-                  <p className="text-white text-sm font-semibold">Google Meet</p>
+                  <p className="text-white text-sm font-semibold">YouTube Live</p>
                 </div>
               </motion.div>
 
@@ -256,29 +237,30 @@ export default function Hero({ onRegisterClick }: HeroProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="w-full sm:w-auto pt-4"
+              className="w-full pt-4"
             >
               <button
-                onClick={onRegisterClick}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-4.5 rounded-xl text-base tracking-wide shadow-xl shadow-red-900/30 hover:shadow-red-900/40 hover:-translate-y-0.5 transition-all duration-150"
+                onClick={handleScrollToLive}
+                className="w-full md:w-auto inline-flex items-center justify-center gap-3 bg-red-600 hover:bg-red-700 text-white font-extrabold px-10 py-5 rounded-2xl text-base tracking-wide shadow-xl shadow-red-900/30 hover:shadow-red-900/40 hover:-translate-y-1 transition-all duration-150 flex items-center gap-3"
                 id="hero-reserve-btn"
               >
-                Je réserve ma place gratuitement
+                <Youtube className="w-6 h-6" />
+                Accéder au Live YouTube
                 <ArrowRight className="w-5 h-5 animate-pulse" />
               </button>
             </motion.div>
           </div>
 
           {/* Right Column (Cyprien Portrait) */}
-          <div className="lg:col-span-5 relative flex justify-center">
+          <div className="lg:col-span-5 md:col-span-1 relative flex justify-center">
             {/* Background glowing circle */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 sm:w-80 h-72 sm:h-80 bg-gradient-to-tr from-blue-600/20 to-red-600/20 rounded-full blur-2xl" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 sm:w-72 md:w-80 lg:w-96 h-64 sm:h-72 md:h-80 lg:h-96 bg-gradient-to-tr from-blue-600/20 to-red-600/20 rounded-full blur-2xl" />
 
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative w-72 sm:w-80 lg:w-96 aspect-3/4 rounded-3xl overflow-hidden bg-transparent"
+              className="relative w-64 sm:w-72 md:w-80 lg:w-96 aspect-3/4 rounded-3xl overflow-hidden bg-transparent"
               id="hero-portrait-container"
             >
               <img

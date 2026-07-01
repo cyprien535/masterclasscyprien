@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Code2 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { Menu, X, Code2, Youtube } from "lucide-react";
 
 interface HeaderProps {
   onRegisterClick: () => void;
@@ -21,9 +22,9 @@ export default function Header({ onRegisterClick }: HeaderProps) {
     { label: "Accueil", href: "#accueil" },
     { label: "À propos", href: "#about" },
     { label: "Projets", href: "#projets" },
-    { label: "Témoignages", href: "#testimonials" },
     { label: "Programme", href: "#programme" },
-    { label: "FAQ", href: "#faq" },
+    { label: "Live YouTube", href: "#live" },
+
   ];
 
   const handleScrollTo = (id: string) => {
@@ -88,11 +89,12 @@ export default function Header({ onRegisterClick }: HeaderProps) {
           {/* Desktop CTA Button */}
           <div className="hidden lg:block">
             <button
-              onClick={onRegisterClick}
-              className="bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold text-xs tracking-wider uppercase px-5 py-3 rounded-lg shadow-lg shadow-red-900/20 hover:shadow-red-900/30 transition-all transform hover:-translate-y-0.5 duration-150"
+              onClick={() => handleScrollTo("#live")}
+              className="bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-bold text-xs tracking-wider uppercase px-5 py-3 rounded-lg shadow-lg shadow-red-900/20 hover:shadow-red-900/30 transition-all transform hover:-translate-y-0.5 duration-150 flex items-center gap-2"
               id="header-cta-btn"
             >
-              Je m'inscris gratuitement
+              <Youtube className="w-4 h-4" />
+              Accéder au Live
             </button>
           </div>
 
@@ -100,7 +102,7 @@ export default function Header({ onRegisterClick }: HeaderProps) {
           <div className="lg:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-slate-300 hover:text-white focus:outline-none p-2 rounded-lg bg-slate-800/50 border border-slate-700/50"
+              className="text-slate-300 hover:text-white focus:outline-none p-2 rounded-lg bg-slate-800/50 border border-slate-700/50 transition-colors duration-150"
               aria-label="Toggle menu"
               id="mobile-menu-toggle"
             >
@@ -110,39 +112,52 @@ export default function Header({ onRegisterClick }: HeaderProps) {
         </div>
       </div>
 
-      {/* Mobile Menu Panel */}
-      {isOpen && (
-        <div
-          className="lg:hidden bg-slate-900/98 border-b border-slate-800 px-4 pt-4 pb-6 space-y-4 shadow-xl backdrop-blur-lg"
-          id="mobile-nav-panel"
-        >
-          <div className="flex flex-col space-y-3">
-            {menuItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleScrollTo(item.href);
+      {/* Mobile Menu Panel with Animation */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="lg:hidden bg-slate-900/95 border-b border-slate-700/50 px-4 pt-4 pb-6 space-y-3 shadow-xl backdrop-blur-md"
+            id="mobile-nav-panel"
+          >
+            <div className="flex flex-col space-y-2">
+              {menuItems.map((item, idx) => (
+                <motion.a
+                  key={item.href}
+                  href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleScrollTo(item.href);
+                  }}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.05 }}
+                  className="text-slate-300 hover:text-white hover:bg-slate-800/60 px-3 py-2.5 rounded-lg text-base font-medium transition-all duration-150"
+                >
+                  {item.label}
+                </motion.a>
+              ))}
+              <motion.button
+                onClick={() => {
+                  setIsOpen(false);
+                  handleScrollTo("#live");
                 }}
-                className="text-slate-300 hover:text-white hover:bg-slate-800/40 px-3 py-2.5 rounded-lg text-base font-medium transition-colors"
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: menuItems.length * 0.05 }}
+                className="w-full mt-3 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-bold text-center py-3 rounded-lg text-sm uppercase tracking-wider shadow-lg shadow-red-900/20 hover:shadow-red-900/30 transition-all transform hover:-translate-y-0.5 duration-150 flex items-center justify-center gap-2"
+                id="mobile-header-cta-btn"
               >
-                {item.label}
-              </a>
-            ))}
-            <button
-              onClick={() => {
-                setIsOpen(false);
-                onRegisterClick();
-              }}
-              className="w-full mt-2 bg-red-600 hover:bg-red-700 text-white font-semibold text-center py-3 rounded-lg text-sm uppercase tracking-wider shadow-lg transition-all"
-              id="mobile-header-cta-btn"
-            >
-              Je m'inscris gratuitement
-            </button>
-          </div>
-        </div>
-      )}
+                <Youtube className="w-4 h-4" />
+                Accéder au Live
+              </motion.button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
+    <!-- Font Optimization: Preconnect to Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
     <!-- Primary SEO Metadata -->
     <title>Masterclass Gratuite — MEVI Cyprien | Créer des Applications & Sites Web Pro avec l'IA</title>
     <link rel="icon" type="image/svg+xml" href="/src/assets/images/favicon.svg" />
@@ -21,16 +25,23 @@
     <meta property="og:site_name" content="Masterclass MEVI Cyprien" />
     <meta property="og:locale" content="fr_FR" />
 
+    <!-- Performance & Rendering -->
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="color-scheme" content="dark" />
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://ais-pre-7bcxo2pxauxbbhfzzplhno-220293693885.europe-west2.run.app" />
     <meta name="twitter:title" content="Masterclass Gratuite — MEVI Cyprien | Créer des Applications & Sites Web Pro avec l'IA" />
     <meta name="twitter:description" content="Apprenez à concevoir et déployer des applications et sites internet de qualité professionnelle grâce à l'Intelligence Artificielle. Accès illimité !" />
     <meta name="twitter:image" content="/src/assets/images/cyprien_laptop_1782318456160.jpg" />
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" as="style" href="/src/index.css" />
   </head>
-  <body>
+  <body class="antialiased">
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="/src/main.tsx" defer></script>
   </body>
 </html>
-

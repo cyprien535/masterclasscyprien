@@ -12,18 +12,18 @@ export default function ProjectsSection() {
     <section className="py-20 bg-slate-900 border-y border-slate-950" id="projets">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Title */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold font-display text-white tracking-tight">
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-4xl font-bold font-display text-white tracking-tight">
             Quelques projets <span className="text-blue-500">réalisés</span>
           </h2>
           <div className="flex justify-center items-center mt-3 space-x-1.5">
-            <span className="w-12 h-1 bg-red-500 rounded-full" />
-            <span className="w-12 h-1 bg-blue-500 rounded-full" />
+            <span className="w-8 sm:w-12 h-1 bg-red-500 rounded-full" />
+            <span className="w-8 sm:w-12 h-1 bg-blue-500 rounded-full" />
           </div>
         </div>
 
         {/* Projects Grid - Large Images */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8" id="projects-grid">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8" id="projects-grid">
           <AnimatePresence>
             {displayedProjects.map((project, idx) => (
               <motion.div

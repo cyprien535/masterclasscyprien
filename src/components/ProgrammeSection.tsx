@@ -195,8 +195,15 @@ export default function ProgrammeSection() {
             <div className="mt-12 flex flex-col sm:flex-row justify-center items-center gap-4">
               <span className="text-xs text-slate-400 font-medium">Ne manquez pas ces opportunités uniques !</span>
               <a 
-                href="#register" 
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-red-950/40"
+                href="#inscrire" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  const target = document.querySelector("#inscrire");
+                  if (target) {
+                    target.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }
+                }}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-red-950/40 cursor-pointer"
               >
                 Réserver ma place
                 <ArrowRight className="w-3.5 h-3.5" />

@@ -1,9 +1,9 @@
 export interface Registration {
   id: string;
   firstName: string;
-  lastName: string;
+  lastName?: string;
   email: string;
-  whatsApp: string;
+  whatsApp?: string;
   createdAt: string;
 }
 

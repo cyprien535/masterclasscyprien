@@ -216,16 +216,21 @@ export const faqItems: FAQItem[] = [
   {
     id: "faq-3",
     question: "La masterclass est-elle vraiment gratuite ?",
-    answer: "Oui, elle est 100% gratuite. Le but est de partager ma méthode éprouvée avec la communauté et de vous aider à vous lancer sur des bases solides.",
+    answer: "Oui, elle est 100% gratuite et accessible en direct sur YouTube Live pour tout le monde.",
   },
   {
     id: "faq-4",
-    question: "Y aura-t-il un enregistrement disponible ?",
-    answer: "L'enregistrement sera envoyé uniquement aux personnes inscrites qui n'auront pas pu assister au direct. Cependant, je vous conseille vivement d'assister au live pour poser vos questions en direct !",
+    question: "Y aura-t-il un replay disponible ?",
+    answer: "Oui, le live restera disponible sur YouTube. Cependant, assister au direct vous permet de poser vos questions et d'interagir en temps réel.",
   },
   {
     id: "faq-5",
     question: "Quels outils allons-nous aborder ?",
     answer: "Nous parlerons de Figma pour le design, de React, Tailwind et Motion pour le développement moderne, et d'intégrations interactives comme WhatsApp et les formulaires intelligents.",
+  },
+  {
+    id: "faq-6",
+    question: "Comment accéder au live ?",
+    answer: "Le live se déroulera directement sur YouTube. Vous pouvez accéder au lien via le bouton 'Accéder au Live' sur ce site. Laissez votre email en bas de page pour recevoir un rappel.",
   },
 ];

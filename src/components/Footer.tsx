@@ -27,14 +27,14 @@ export default function Footer({ onOpenLegal, onOpenAdmin }: FooterProps = {}) {
   };
 
   return (
-    <footer className="bg-slate-950 border-t border-slate-900 text-slate-400 text-xs sm:text-sm py-16" id="contact">
+    <footer className="bg-slate-950 border-t border-slate-900 text-slate-400 text-xs sm:text-sm py-12 sm:py-16" id="contact">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-12 border-b border-slate-900">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-8 pb-8 sm:pb-12 border-b border-slate-900">
           {/* Col 1: Bio */}
-          <div className="lg:col-span-4 flex flex-col items-start space-y-4 text-left">
+          <div className="lg:col-span-4 md:col-span-1 flex flex-col items-start space-y-3 sm:space-y-4 text-left">
             <div className="flex items-center space-x-3">
-              <div className="bg-red-600 text-white p-2 rounded-xl shadow-lg shadow-red-950/40 flex items-center justify-center">
-                <Code2 className="w-5 h-5" />
+              <div className="bg-red-600 text-white p-2 rounded-xl shadow-lg shadow-red-950/40 flex items-center justify-center shrink-0">
+                <Code2 className="w-4 sm:w-5 h-4 sm:h-5" />
               </div>
               <div>
                 <span className="block text-base font-bold font-display text-white tracking-tight">
@@ -49,7 +49,7 @@ export default function Footer({ onOpenLegal, onOpenAdmin }: FooterProps = {}) {
               J'aide les entrepreneurs et entreprises à se démarquer en ligne grâce à des sites web professionnels et performants.
             </p>
             {/* Socials */}
-            <div className="flex space-x-3 pt-2">
+            <div className="flex space-x-2 sm:space-x-3 pt-2">
               <a
                 href="https://www.facebook.com/profile.php?id=61588131732811"
                 target="_blank"
@@ -115,14 +115,14 @@ export default function Footer({ onOpenLegal, onOpenAdmin }: FooterProps = {}) {
               </li>
               <li>
                 <a
-                  href="#testimonials"
+                  href="#live"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleScrollTo("#testimonials");
+                    handleScrollTo("#live");
                   }}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-white transition-colors font-bold text-red-500"
                 >
-                  Témoignages
+                  Live YouTube
                 </a>
               </li>
             </ul>
@@ -160,10 +160,10 @@ export default function Footer({ onOpenLegal, onOpenAdmin }: FooterProps = {}) {
               </li>
               <li>
                 <a
-                  href="#contact"
+                  href="#inscrire"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleScrollTo("#contact");
+                    handleScrollTo("#inscrire");
                   }}
                   className="hover:text-white transition-colors"
                 >
